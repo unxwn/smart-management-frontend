@@ -1,0 +1,135 @@
+/* Календар */
+#calendar {
+    height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+}
+
+.appointments-calendar {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.appointments-calendar h3 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+/* Заголовок календаря з кнопками навігації */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 0 10px;
+}
+
+.calendar-nav {
+    background: none;
+    border: none;
+    color: #2c3e50;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.calendar-nav:hover {
+    background-color: #e3e9f0;
+}
+
+.calendar-nav i {
+    font-size: 14px;
+}
+
+.month-name {
+    font-weight: bold;
+    font-size: 18px;
+    color: #2c3e50;
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* Таблиця календаря */
+.mini-calendar {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    table-layout: fixed;
+}
+
+.mini-calendar th {
+    padding: 8px;
+    text-align: center;
+    background-color: #f8f9fa;
+    color: #7f8c8d;
+    font-weight: normal;
+}
+
+.mini-calendar td {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #eee;
+    height: 30px;
+    vertical-align: middle;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s;
+}
+
+.mini-calendar td:hover {
+    background-color: #f0f8ff;
+}
+
+.mini-calendar .day-number {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mini-calendar td.today .day-number {
+    background-color: #e3f2fd;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    margin: 0 auto;
+}
+
+.mini-calendar td.has-appointment {
+    background-color: #fff8e1;
+}
+
+.mini-calendar td.has-appointment:hover {
+    background-color: #ffecb3;
+}
+
+/* Крапка, що позначає наявність запису */
+.appointment-dot {
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: #ffa000;
+    border-radius: 50%;
+}
+
+/* Пусті клітинки (дні з інших місяців) */
+.mini-calendar td:empty {
+    background-color: #f9f9f9;
+    cursor: default;
+}
+
+.mini-calendar td:empty:hover {
+    background-color: #f9f9f9;
+}

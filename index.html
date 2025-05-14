@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Госпітальна система</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/tables.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-hospital" style="margin-right: 10px;"></i>Лікарня
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-tab="home">
+                    <a href="#"><i class="fas fa-home"></i> Головна</a>
+                </li>
+                <li data-tab="appointments">
+                    <a href="#"><i class="fas fa-calendar-check"></i> Запис пацієнтів</a>
+                </li>
+                <li data-tab="services">
+                    <a href="#"><i class="fas fa-procedures"></i> Надання послуг</a>
+                </li>
+                <li data-tab="inventory">
+                    <a href="#"><i class="fas fa-boxes"></i> Склад</a>
+                </li>
+                <li data-tab="dispense">
+                    <a href="#"><i class="fas fa-pills"></i> Видача товарів</a>
+                </li>
+                <li data-tab="reports">
+                    <a href="#"><i class="fas fa-chart-bar"></i> Звіти</a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-name" id="user-name"></div>
+                    <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Вийти</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+
+            <div id="home" class="tab-content active">
+                <div class="tab-header">
+                    <h1><i class="fas fa-home"></i> Головна</h1>
+                </div>
+
+                <div class="quick-links">
+                    <h3>Швидкий доступ</h3>
+                    <div class="links-grid">
+                        <a href="#" class="quick-link" data-tab="appointments">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Запис пацієнтів</span>
+                        </a>
+                        <a href="#" class="quick-link" data-tab="services">
+                            <i class="fas fa-procedures"></i>
+                            <span>Надання послуг</span>
+                        </a>
+                        <a href="#" class="quick-link" data-tab="inventory">
+                            <i class="fas fa-boxes"></i>
+                            <span>Управління складом</span>
+                        </a>
+                        <a href="#" class="quick-link" data-tab="dispense">
+                            <i class="fas fa-pills"></i>
+                            <span>Видача товарів</span>
+                        </a>
+                        <a href="#" class="quick-link" data-tab="reports">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Звіти</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="home-grid">
+
+                    <div class="stats">
+                        <div class="stat-card">
+                            <h3>Пацієнтів сьогодні</h3>
+                            <p id="today-patients">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Надано послуг сьогодні</h3>
+                            <p id="today-services">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Товарів на складі</h3>
+                            <p id="total-medicines">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Видано товарів сьогодні</h3>
+                            <p id="today-dispensed">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Дохід за товари сьогодні</h3>
+                            <p id="today-dispensed-income">0 грн</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Дохід за послуги<br>сьогодні</h3>
+                            <p id="today-services-income">0 грн</p>
+                        </div>
+                    </div>
+
+                    <div class="appointments-calendar">
+                        <h3>Календар записів</h3>
+                        <div id="calendar"></div>
+                    </div>
+
+                    <div class="low-stock-alerts">
+                        <h3>Сповіщення</h3>
+                        <div id="alerts-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="appointments" class="tab-content">
+                <div class="tab-header">
+                    <h1><i class="fas fa-calendar-check"></i> Запис пацієнтів</h1>
+                </div>
+                <div class="inventory-actions">
+                    <button id="add-appointment-btn">Додати запис</button>
+                </div><br>
+                <div class="search-container">
+                    <input type="text" id="appointments-search" class="search-input"
+                        placeholder="Пошук за ПІБ, телефоном, причиною або датою...">
+                    <button class="search-btn" onclick="searchAppointments()">Пошук</button>
+                    <button class="clear-search-btn" onclick="clearAppointmentsSearch()">Очистити</button>
+                </div>
+                <div class="appointments-list">
+                    <div class="sort-options">
+                        <button class="sort-btn" data-sort="date-desc">За датою (нові → старі)</button>
+                        <button class="sort-btn" data-sort="date-asc">За датою (старі → нові)</button>
+                        <button class="sort-btn" data-sort="name-asc">За ПІБ (А → Я)</button>
+                        <button class="sort-btn" data-sort="name-desc">За ПІБ (Я → А)</button>
+                    </div>
+                    <table id="appointments-table">
+                        <thead>
+                            <tr>
+                                <th>Дата</th>
+                                <th>ПІБ</th>
+                                <th>Причина</th>
+                                <th>Телефон</th>
+                                <th>Дії</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="services" class="tab-content">
+                <div class="tab-header">
+                    <h1><i class="fas fa-procedures"></i> Надання послуг</h1>
+                </div>
+                <div class="inventory-actions">
+                    <button id="add-service-btn">Додати послугу</button>
+                </div><br>
+                <div class="search-container">
+                    <input type="text" id="services-search" class="search-input"
+                        placeholder="Пошук за пацієнтом, послугою або датою...">
+                    <button class="search-btn" onclick="searchServices()">Пошук</button>
+                    <button class="clear-search-btn" onclick="clearServicesSearch()">Очистити</button>
+                </div>
+                <div class="sort-options">
+                    <button class="sort-btn" data-sort="date-desc">За датою (нові → старі)</button>
+                    <button class="sort-btn" data-sort="date-asc">За датою (старі → нові)</button>
+                    <button class="sort-btn" data-sort="name-asc">За ПІБ (А → Я)</button>
+                    <button class="sort-btn" data-sort="name-desc">За ПІБ (Я → А)</button>
+                </div>
+                <table id="services-table">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Пацієнт</th>
+                            <th>Послуга</th>
+                            <th>Вартість</th>
+                            <th>Дії</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div id="inventory" class="tab-content">
+                <div class="tab-header">
+                    <h1><i class="fas fa-boxes"></i> Управління складом</h1>
+                </div>
+                <div class="inventory-actions">
+                    <button id="add-item-btn">Додати товар</button>
+                </div><br>
+                <div class="search-container">
+                    <input type="text" id="inventory-search" class="search-input"
+                        placeholder="Пошук за назвою, артикулом або постачальником...">
+                    <button class="search-btn" onclick="searchInventory()">Пошук</button>
+                    <button class="clear-search-btn" onclick="clearInventorySearch()">Очистити</button>
+                </div>
+                <div class="sort-options">
+                    <button class="sort-btn" data-sort="name-asc">За назвою (А → Я)</button>
+                    <button class="sort-btn" data-sort="name-desc">За назвою (Я → А)</button>
+                </div>
+                <table id="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>Артикул</th>
+                            <th>Назва</th>
+                            <th>Постачальник</th>
+                            <th>Кількість</th>
+                            <th>Ціна</th>
+                            <th>Дії</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div id="dispense" class="tab-content">
+                <div class="tab-header">
+                    <h1><i class="fas fa-pills"></i> Видача товарів</h1>
+                </div>
+                <div class="inventory-actions">
+                    <button id="add-dispense-btn">Додати видачу</button>
+                </div><br>
+                <div class="search-container">
+                    <input type="text" id="dispense-search" class="search-input"
+                        placeholder="Пошук за пацієнтом, товаром або датою...">
+                    <button class="search-btn" onclick="searchDispensed()">Пошук</button>
+                    <button class="clear-search-btn" onclick="clearDispensedSearch()">Очистити</button>
+                </div>
+                <div class="sort-options">
+                    <button class="sort-btn" data-sort="date-desc">За датою (нові → старі)</button>
+                    <button class="sort-btn" data-sort="date-asc">За датою (старі → нові)</button>
+                    <button class="sort-btn" data-sort="name-asc">За ПІБ (А → Я)</button>
+                    <button class="sort-btn" data-sort="name-desc">За ПІБ (Я → А)</button>
+                </div>
+                <table id="dispense-table">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Пацієнт</th>
+                            <th>Товар</th>
+                            <th>Кількість</th>
+                            <th>Ціна</th>
+                            <th>Сума</th>
+                            <th>Дії</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div id="reports" class="tab-content">
+                <div class="tab-header">
+                    <h1><i class="fas fa-chart-bar"></i> Звіти</h1>
+                </div>
+
+                <div class="report-type-switcher">
+                    <button class="report-type-btn active" data-report-type="dispense">Звіт по товарам</button>
+                    <button class="report-type-btn" data-report-type="services">Звіт по послугам</button>
+                </div><br>
+                <div class="search-container">
+                    <input type="text" id="reports-search" class="search-input"
+                        placeholder="Пошук за пацієнтом, товаром/послугою або датою...">
+                    <button class="search-btn" onclick="searchReports()">Пошук</button>
+                    <button class="clear-search-btn" onclick="clearReportsSearch()">Очистити</button>
+                </div>
+                <div class="report-filters">
+                    <div class="form-group">
+                        <label for="report-start-date">З</label>
+                        <input type="date" id="report-start-date" class="date-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="report-end-date">По</label>
+                        <input type="date" id="report-end-date" class="date-input">
+                    </div>
+                </div>
+
+                <div class="report-summary">
+                    <div class="summary-card">
+                        <h3>Всього записів</h3>
+                        <p id="total-records">0</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Загальна сума</h3>
+                        <p id="total-amount">0 грн</p>
+                    </div>
+                </div>
+
+                <div id="dispense-report" class="report-table-container">
+                    <table id="report-table">
+                        <thead>
+                            <tr>
+                                <th>Дата</th>
+                                <th>Пацієнт</th>
+                                <th>Товар</th>
+                                <th>Кількість</th>
+                                <th>Ціна</th>
+                                <th>Сума</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div id="services-report" class="report-table-container" style="display: none;">
+                    <table id="services-report-table">
+                        <thead>
+                            <tr>
+                                <th>Дата</th>
+                                <th>Пацієнт</th>
+                                <th>Послуга</th>
+                                <th>Вартість</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="appointment-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2 id="appointment-modal-title">Додати запис</h2>
+                    <form id="appointment-form">
+                        <input type="hidden" id="appointment-id">
+                        <div class="form-group">
+                            <label for="patient-name">ПІБ пацієнта</label>
+                            <input type="text" id="patient-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-phone">Номер телефону</label>
+                            <input type="tel" id="patient-phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-reason">Причина звернення</label>
+                            <textarea id="patient-reason" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointment-date">Дата запису</label>
+                            <input type="date" id="appointment-date" required>
+                        </div>
+                        <button type="submit">Зберегти</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="confirm-appointment-delete" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Підтвердження видалення</h2>
+                    <p>Ви впевнені, що хочете видалити цей запис пацієнта?</p>
+                    <div class="modal-actions">
+                        <button id="confirm-appointment-delete-btn">Так, видалити</button>
+                        <button class="cancel-btn">Скасувати</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="service-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2 id="service-modal-title">Додати послугу</h2>
+                    <form id="service-form">
+                        <input type="hidden" id="service-id">
+                        <div class="form-group">
+                            <label for="service-patient">Пацієнт</label>
+                            <select id="service-patient" required>
+                                <option value="">Оберіть пацієнта</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="service-name">Назва послуги</label>
+                            <input type="text" id="service-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service-price">Вартість (грн)</label>
+                            <input type="number" id="service-price" min="0" step="0.01" required>
+                        </div>
+                        <button type="submit">Зберегти</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="confirm-service-delete" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Підтвердження видалення</h2>
+                    <p>Ви впевнені, що хочете видалити цю послугу?</p>
+                    <div class="modal-actions">
+                        <button id="confirm-service-delete-btn">Так, видалити</button>
+                        <button class="cancel-btn">Скасувати</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="item-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2 id="modal-title">Додати товар</h2>
+                    <form id="item-form">
+                        <input type="hidden" id="item-id">
+                        <div class="form-group">
+                            <label for="item-name">Назва</label>
+                            <input type="text" id="item-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-supplier">Постачальник</label>
+                            <input type="text" id="item-supplier" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-quantity">Кількість</label>
+                            <input type="number" id="item-quantity" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-price">Ціна (грн)</label>
+                            <input type="number" id="item-price" min="0" step="0.01" required>
+                        </div>
+                        <button type="submit">Зберегти</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="confirm-item-delete" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Підтвердження видалення</h2>
+                    <p>Ви впевнені, що хочете видалити цей товар?</p>
+                    <div class="modal-actions">
+                        <button id="confirm-item-delete-btn">Так, видалити</button>
+                        <button class="cancel-btn">Скасувати</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dispense-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2 id="dispense-modal-title">Видача товару</h2>
+                    <form id="dispense-form">
+                        <div class="form-group">
+                            <label for="dispense-patient">Пацієнт</label>
+                            <select id="dispense-patient" required>
+                                <option value="">Оберіть пацієнта</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dispense-item">Товар</label>
+                            <select id="dispense-item" required>
+                                <option value="">Оберіть товар</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dispense-quantity">Кількість</label>
+                            <input type="number" id="dispense-quantity" min="1" value="1" required>
+                        </div>
+                        <button type="submit">Видати</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/stats.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/appointments.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/inventory.js"></script>
+    <script src="js/dispense.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/alerts.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/global.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+/* Стилі для авторизації */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #e9e8e8;
+}
+
+.auth-box {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-box h1 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.auth-box h1 i {
+    margin-right: 10px;
+}
+
+.auth-form h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.auth-switch {
+    margin-top: 20px;
+    color: #7f8c8d;
+}
+
+.auth-switch a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}

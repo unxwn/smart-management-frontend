@@ -1,0 +1,68 @@
+/* Сайдбар */
+.sidebar {
+    width: 250px;
+    background-color: #1b2631;
+    color: white;
+    padding: 20px 0;
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    border-top: 1px solid #34495e;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 0 30px;
+    border-bottom: 1px solid #34495e;
+    margin-bottom: 20px;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.nav-links li:hover {
+    background-color: #314457;
+}
+
+.nav-links li.active {
+    background-color: #627683;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.nav-links li a i {
+    width: 20px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+/* Інформація про користувача */
+.user-info {
+    padding: 15px 20px;
+    margin-top: 20px;
+    color: white;
+}
+
+.user-name {
+    margin-bottom: 10px;
+    font-size: 14px;
+    word-break: break-all;
+}

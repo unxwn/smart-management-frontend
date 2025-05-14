@@ -1,0 +1,59 @@
+/* Форми */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Фільтри звіту */
+.report-filters {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.date-filters {
+    display: flex;
+    gap: 15px;
+}
+
+.date-filters .form-group {
+    margin-bottom: 0;
+}
+
+.date-input {
+    width: 150px !important;
+}
+
+.appointment-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: flex-end;
+}
+
+.appointment-filters .form-group {
+    margin-bottom: 0;
+    flex: 1;
+}
