@@ -6,58 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Авторизація - Госпітальна система</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/auth.css">
     <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/auth.css">
     <link rel="stylesheet" href="css/buttons.css">
     <link rel="stylesheet" href="css/forms.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/tables.css">
 </head>
 
 <body>
     <div class="auth-container">
         <div class="auth-box">
             <h1><i class="fas fa-hospital"></i> Госпітальна система</h1>
-
-            <div id="login-form" class="auth-form">
+            <form id="login-form" class="auth-form">
                 <h2>Авторизація</h2>
+                <div id="login-error" class="error-message"></div>
                 <div class="form-group">
-                    <label for="login-email">Електронна пошта</label>
-                    <input type="email" id="login-email" required>
+                    <label for="login-username">Логін</label>
+                    <input type="text" id="login-username" name="username" required>
                 </div>
                 <div class="form-group">
                     <label for="login-password">Пароль</label>
-                    <input type="password" id="login-password" required>
+                    <input type="password" id="login-password" name="password" required>
                 </div>
-                <button id="login-btn" class="auth-btn">Увійти</button>
-                <p class="auth-switch">Ще не зареєстровані? <a href="#" id="show-register">Створити акаунт</a></p>
-            </div>
-
-            <div id="register-form" class="auth-form" style="display: none;">
-                <h2>Реєстрація</h2>
-                <div class="form-group">
-                    <label for="register-name">Ім'я</label>
-                    <input type="text" id="register-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-email">Електронна пошта</label>
-                    <input type="email" id="register-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-password">Пароль</label>
-                    <input type="password" id="register-password" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-confirm-password">Підтвердіть пароль</label>
-                    <input type="password" id="register-confirm-password" required>
-                </div>
-                <button id="register-btn" class="auth-btn">Зареєструватися</button>
-                <p class="auth-switch">Вже зареєстровані? <a href="#" id="show-login">Увійти</a></p>
-            </div>
+                <button type="submit" id="login-btn" class="auth-btn">Увійти</button>
+                <p class="auth-switch">Ще не зареєстровані?
+                    <a href="register.html" id="show-register" class="auth-link">Створити акаунт</a>
+                </p>
+            </form>
         </div>
     </div>
 
-    <script src="js/auth.js"></script>
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/login.js"></script>
 </body>
 
 </html>
